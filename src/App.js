@@ -26,7 +26,6 @@ function App() {
   }
 
 
-
   const handleFormSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -65,7 +64,6 @@ function App() {
           setError(error.message)
         })
     }
-
     event.preventDefault();
   }
 
@@ -74,7 +72,6 @@ function App() {
     .then(()=>{
       console.log('email sent');
     })
-
   }
 
   const verifyEmail = () =>{
@@ -110,6 +107,7 @@ function App() {
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check onChange={handleRegisteredChange} type="checkbox" label="Already Registered" />
           </Form.Group>
+          {/* <p className='text-success'>{'Success'}</p> */}
           <p className='text-danger'>{error}</p>
           <Button onClick={handlePasswordRest} variant="link">Forget Password?</Button>
           <Button variant="primary" type="submit">
