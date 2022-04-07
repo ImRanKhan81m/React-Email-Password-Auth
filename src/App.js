@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import app from './firebase.init';
@@ -42,7 +42,14 @@ function App() {
     setError('');
 
     if (registered) {
-
+      signInWithEmailAndPassword(auth, email, password)
+      .then(result =>{
+        const user = result.user;
+        console.log(user);
+      })
+      .catch(error=>{
+        console.error(error);
+      })
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then(result => {
