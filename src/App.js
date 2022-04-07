@@ -1,4 +1,4 @@
-import { getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import app from './firebase.init';
@@ -19,7 +19,14 @@ function App() {
     setPassword(event.target.value);
   }
   const handleFormSubmit = event => {
-    console.log('form submitted', email, password);
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(result =>{
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(error =>{
+      console.error(error);
+    })
     event.preventDefault();
   }
 
@@ -38,7 +45,7 @@ function App() {
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control onBlur={handlePasswordBlur} type="password" placeholder="Password" />
+            <Form.Control onBlur={handlePasswordBlur} type="password" placeholder="Password" autoComplete='on' />
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit
