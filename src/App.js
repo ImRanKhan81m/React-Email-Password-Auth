@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import app from './firebase.init';
@@ -43,13 +43,14 @@ function App() {
 
     if (registered) {
       signInWithEmailAndPassword(auth, email, password)
-      .then(result =>{
-        const user = result.user;
-        console.log(user);
-      })
-      .catch(error=>{
-        console.error(error);
-      })
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+        })
+        .catch(error => {
+          console.error(error);
+          setError(error.message);
+        })
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then(result => {
@@ -57,6 +58,7 @@ function App() {
           console.log(user);
           setEmail('');
           setPassword('')
+          verifyEmail()
         })
         .catch(error => {
           console.error(error);
@@ -65,6 +67,21 @@ function App() {
     }
 
     event.preventDefault();
+  }
+
+  const handlePasswordRest = () =>{
+    sendPasswordResetEmail(auth, email)
+    .then(()=>{
+      console.log('email sent');
+    })
+
+  }
+
+  const verifyEmail = () =>{
+    sendEmailVerification(auth.currentUser)
+    .then(()=>{
+      console.log('Email Verification Sent');
+    })
   }
 
   return (
@@ -94,6 +111,7 @@ function App() {
             <Form.Check onChange={handleRegisteredChange} type="checkbox" label="Already Registered" />
           </Form.Group>
           <p className='text-danger'>{error}</p>
+          <Button onClick={handlePasswordRest} variant="link">Forget Password?</Button>
           <Button variant="primary" type="submit">
             {registered ? 'Login' : 'Register'}
           </Button>
