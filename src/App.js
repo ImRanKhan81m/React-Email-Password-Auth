@@ -3,20 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import app from './firebase.init';
 import { Button, Form } from 'react-bootstrap';
+import { useState } from 'react';
 
 
 const auth = getAuth(app)
 
 function App() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleEmailBlur = event => {
-    console.log(event.target.value);
+    setEmail(event.target.value);
   }
   const handlePasswordBlur = event => {
-    console.log(event.target.value);
+    setPassword(event.target.value);
   }
   const handleFormSubmit = event => {
-    console.log('form submitted');
+    console.log('form submitted', email, password);
     event.preventDefault();
   }
 
