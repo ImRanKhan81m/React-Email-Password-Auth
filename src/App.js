@@ -7,16 +7,20 @@ const auth = getAuth(app)
 
 function App() {
 
-  const handleEmailChange = () => {
-    console.log('something typed');
+  const handleEmailBlur = event => {
+    console.log(event.target.value);
+  }
+  const handlePasswordBlur = event =>{
+    console.log(event.target.value);
   }
 
   return (
     <div className="App">
       <form >
         <br /><br />
-        <input onChange={handleEmailChange} type="email" name="" id="" /><br /><br />
-        <input type="password" name="" id="" />
+        <input onBlur={handleEmailBlur} type="email" name="" id="" /><br /><br />
+        <input onBlur={handlePasswordBlur} type="password" name="" id="" /><br /><br />
+        <input type="submit" value="LOGIN" />
       </form>
     </div>
   );
